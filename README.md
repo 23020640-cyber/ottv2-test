@@ -64,7 +64,7 @@ Trang dùng ES module nên **không mở trực tiếp bằng double-click** (`f
 
 | Thành viên | Họ tên – MSSV | Phụ trách |
 |---|---|---|
-| TV1 | Nguyễn Đăng Doanh | `gameLogic.js` – luật chơi |
+| TV1 | Nguyễn Đăng Doanh -24020071 | `gameLogic.js` – luật chơi |
 | TV2 | Nguyễn Đức Hải | `index.html` – giao diện Bài 1 |
 | TV3 | Trương Gia Sinh – 23020640 | `arenaNetwork.js`, `arena.html` – Bài 2 online với playhtml |
 | TV4 | Lê Bá Tùng Dương | Quản lý repo, README, kiểm thử |
