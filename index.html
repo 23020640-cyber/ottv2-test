@@ -42,6 +42,13 @@
     }
     h1 { margin: 0; font-size: 1.25rem; letter-spacing: .04em; }
     h1 span { color: var(--p1); }
+    .to-arena {
+      margin-left: auto;
+      padding: 8px 14px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      color: var(--muted); text-decoration: none; font-weight: 600; font-size: 14px;
+    }
+    .to-arena:hover { color: var(--text); border-color: var(--p1); }
     .layout {
       display: grid;
       grid-template-columns: 220px 1fr 240px;
@@ -162,6 +169,7 @@
   <div class="app">
     <header>
       <h1>OTT<span>v2</span> — Oẳn Tù Tì trên bàn 9×9</h1>
+      <a class="to-arena" href="./arena.html">Đấu trường online 4 bàn (Bài 2) →</a>
       <div id="turnBadge" class="turn-badge"><span class="dot P1"></span> Lượt Xanh</div>
     </header>
 

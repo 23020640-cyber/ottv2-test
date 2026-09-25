@@ -7,8 +7,10 @@ import {
 } from "./gameLogic.js";
 
 /* =================== CẤU HÌNH =================== */
-// Test ổn thì chốt cứng version, ví dụ "https://unpkg.com/playhtml@2.9.0"
-const PLAYHTML_URL = "https://unpkg.com/playhtml@latest";
+// CHỐT CỨNG VERSION: mở https://unpkg.com/playhtml@latest trên trình duyệt, địa chỉ sẽ tự
+// chuyển thành playhtml@X.Y.Z/... → thay "latest" bên dưới bằng đúng X.Y.Z đó.
+// Nhờ vậy thư viện ra bản mới cũng không làm hỏng bài.
+const PLAYHTML_URL = "https://unpkg.com/playhtml@2.14.1";
 const BOARD_IDS = ["board-1", "board-2", "board-3", "board-4"];
 const N = 9;
 const SIDE = { P1: "Xanh", P2: "Đỏ" };
@@ -73,6 +75,17 @@ const selected = {};   // quân đang chọn ở từng bàn
 const latest = {};     // dữ liệu mới nhất của từng bàn, để biết mình đang ngồi bàn nào
 const seatedElsewhere = (boardId) =>
   BOARD_IDS.some((id) => id !== boardId && sideOf(latest[id]));
+
+/* =================== BÁO "TỚI LƯỢT BẠN" TRÊN TIÊU ĐỀ TAB =================== */
+// Hữu ích khi đang xem bàn khác hoặc chuyển sang tab khác.
+const BASE_TITLE = document.title;
+function updateTitle() {
+  const myTurn = BOARD_IDS.some((id) => {
+    const d = latest[id];
+    return d && !d.winner && d.seats?.P1 && d.seats?.P2 && sideOf(d) === d.turn;
+  });
+  document.title = myTurn ? "🔔 Tới lượt bạn! – OTTv2" : BASE_TITLE;
+}
 
 /* =================== VẼ 1 BÀN =================== */
 function render(el, data) {
@@ -157,6 +170,7 @@ function render(el, data) {
     <div class="t-board">${cells}</div>
     <div class="t-counts"><span class="P1">${cnt("P1")}</span><span class="P2">${cnt("P2")}</span></div>
     ${actions ? `<div class="t-actions">${actions}</div>` : ""}`;
+  updateTitle();
 }
 
 /* =================== XỬ LÝ CLICK =================== */

@@ -107,6 +107,21 @@ export function getValidMovesForPiece(board, r, c) {
 }
 
 /**
+ * 4b. KIỂM TRA MỘT BÊN CÒN NƯỚC ĐI HỢP LỆ NÀO KHÔNG
+ * Dùng cho luật: bên tới lượt mà bị chặn hết đường thì thua (tránh ván cờ bị treo).
+ */
+export function hasAnyValidMove(board, owner) {
+  for (let r = 0; r < 9; r++) {
+    for (let c = 0; c < 9; c++) {
+      if (board[r][c]?.owner === owner && getValidMovesForPiece(board, r, c).length > 0) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+/**
  * 5. ĐẾM SỐ LƯỢNG QUÂN MỖI LOẠI TRÊN BÀN CỜ
  */
 export function countPieces(board) {
@@ -184,6 +199,14 @@ export function applyMove(gameState, fromR, fromC, toR, toC) {
   } else {
     // Chưa ai thắng thì đổi lượt
     gameState.turn = gameState.turn === 'P1' ? 'P2' : 'P1';
+
+    // Điều kiện 3: Đối thủ bị chặn hết, không còn nước đi hợp lệ -> người vừa đi thắng
+    if (!hasAnyValidMove(gameState.board, gameState.turn)) {
+      gameState.winner = movingPiece.owner;
+      gameState.winReason = movingPiece.owner === 'P1'
+        ? 'Người chơi 1 (Xanh) thắng do Đỏ không còn nước đi hợp lệ!'
+        : 'Người chơi 2 (Đỏ) thắng do Xanh không còn nước đi hợp lệ!';
+    }
   }
 
   return true;
